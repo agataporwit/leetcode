@@ -1,36 +1,35 @@
-package agataporwit;
 /**
- * There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]).
- * The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]).
- * The robot can only move either down or right at any point in time.
- * Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
- * The test cases are generated so that the answer will be less than or equal to 2 * 109
- */
+ * You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+ * Find two lines that together with the x-axis form a container, such that the container contains the most water.
+ * Return the maximum amount of water a container can store.
+ * Notice that you may not slant the container.
+ * Input: height = [1,8,6,2,5,4,8,3,7]
+ * Output: 49
+ * Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7].
+ * In this case, the max area of water (blue section) the container can contain is 49.*/
+
 
 public class Main {
-
-    public static void main(String[] args) {
-       var m = 3;
-       var n = 5;
-        System.out.print(uniquePaths(m,n));
-    }
-
-    private static int uniquePaths(int m, int n) {
-        int[][] directPath = new int[m][n];
-        //fill last row with ones
-        for (int i = 0; i < m; i++)
-            directPath[i][0] = 1;
-        //fill last column with ones
-        for (int j = 0; j < n; j++)
-            directPath[0][j] = 1;
-        //then fill next row and columns with number of ways to reach
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++)
-                directPath[i][j] = directPath[i - 1][j] + directPath[i][j - 1];
-
+    public static int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int result = 0;
+        while (left < right) {
+            int boxLength = right - left;
+            int area = boxLength * Math.min(height[left], height[right]);
+            result = Math.max(result, area);
+            if (height[left] < height[right]) {
+                left++;
+            }
+            else {
+                right--;
+            }
         }
-        //then finally return the last element of direct path array
-        return directPath[m-1][n-1];
+        return result;
     }
+    public static void main(String[] args) {
+        int[] numbers = {9,3,6,5};
+        System.out.print(maxArea(numbers));
 
+    }
 }
