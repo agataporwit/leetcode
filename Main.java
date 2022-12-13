@@ -9,7 +9,7 @@
  * In this case, the max area of water (blue section) the container can contain is 49.*/
 
 
-public class Main {
+public class Problem11 {
     public static int maxArea(int[] height) {
         int left = 0;
         int right = height.length - 1;
